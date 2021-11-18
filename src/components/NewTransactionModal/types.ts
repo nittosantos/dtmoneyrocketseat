@@ -5,4 +5,5 @@ export type NewTransactionModalProps = {
 
 export type RadioBoxProps = {
   isActive: boolean;
+  activeColor: 'green' | 'red';
 };
