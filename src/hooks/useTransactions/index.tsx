@@ -1,27 +1,13 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
-import { api } from './services/api';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { api } from '../../services/api';
+import {
+  Transaction,
+  TransactionsContextData,
+  TransactionsProviderProps,
+  TransactionInput,
+} from './types';
 
-type Transaction = {
-  id: number;
-  title: string;
-  amount: number;
-  type: string;
-  category: string;
-  createdAt: string;
-};
-
-type TransactionInput = Omit<Transaction, 'id' | 'createdAt'>;
-
-type TransactionsProviderProps = {
-  children: ReactNode;
-};
-
-type TransactionsContextData = {
-  transactions: Transaction[];
-  createTransaction: (transaction: TransactionInput) => Promise<void>;
-};
-
-export const TransactionContext = createContext<TransactionsContextData>(
+const TransactionContext = createContext<TransactionsContextData>(
   {} as TransactionsContextData
 );
 
@@ -51,4 +37,10 @@ export const TransactionProvider: React.FC<TransactionsProviderProps> = ({
       {children}
     </TransactionContext.Provider>
   );
+};
+
+export const useTransactions = () => {
+  const context = useContext(TransactionContext);
+
+  return context;
 };
