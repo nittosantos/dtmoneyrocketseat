@@ -2,7 +2,7 @@ import logoImg from '../../assets/logo.svg';
 import { Container, Content } from './styles';
 import { HeaderProps } from './types';
 
-export const Header = ({ onOpenTransactionModal }: HeaderProps) => {
+export const Header: React.FC<HeaderProps> = ({ onOpenTransactionModal }) => {
   return (
     <Container>
       <Content>

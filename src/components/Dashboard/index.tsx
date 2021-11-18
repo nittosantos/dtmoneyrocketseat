@@ -2,7 +2,7 @@ import { Summary } from '../Summary';
 import { TransactionsTable } from '../TransactionsTable';
 import { Container } from './styles';
 
-export const Dashboard = () => {
+export const Dashboard: React.FC = () => {
   return (
     <Container>
       <Summary />

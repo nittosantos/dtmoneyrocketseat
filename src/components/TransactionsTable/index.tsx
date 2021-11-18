@@ -3,7 +3,7 @@ import { api } from '../../services/api';
 import { Container } from './styles';
 import { Transaction } from './types';
 
-export const TransactionsTable = () => {
+export const TransactionsTable: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
