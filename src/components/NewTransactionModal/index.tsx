@@ -1,38 +1,42 @@
+import { FormEvent, useState, useContext } from 'react';
 import Modal from 'react-modal';
-import { Container, TransactionContainer, RadioBox } from './styles';
-import { FormEvent, useState } from 'react';
+import { TransactionContext } from '../../TransactionContext';
+import { api } from '../../services/api';
+import { NewTransactionModalProps } from './types';
 import closeImg from '../../assets/close.svg';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
-import { NewTransactionModalProps } from './types';
-import { api } from '../../services/api';
+import { Container, TransactionContainer, RadioBox } from './styles';
 
 export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
   isOpen,
   onRequestClose,
 }) => {
-  const [type, setType] = useState<string>('deposit');
+  const { createTransaction } = useContext(TransactionContext);
+
   const [title, setTitle] = useState<string>('');
-  const [value, setValue] = useState<number>(0);
+  const [amount, setAmount] = useState<number>(0);
+  const [type, setType] = useState<string>('deposit');
   const [category, setCategory] = useState<string>('');
 
-  const handleCreateNewTransaction = (event: FormEvent) => {
+  const handleCreateNewTransaction = async (event: FormEvent) => {
     event.preventDefault();
 
-    const data = {
+    await createTransaction({
       title,
-      value,
-      category,
+      amount,
       type,
-    };
-
-    api.post('/transactions', data);
+      category,
+    });
 
     setTitle('');
-    setValue(0);
-    setType('');
+    setAmount(0);
+    setType('deposit');
     setCategory('');
+
+    onRequestClose();
   };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -59,8 +63,8 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
         <input
           placeholder='Valor'
           type='number'
-          value={value}
-          onChange={(event) => setValue(Number(event.target.value))}
+          value={amount}
+          onChange={(event) => setAmount(Number(event.target.value))}
         />
 
         <TransactionContainer>
