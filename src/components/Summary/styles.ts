@@ -1,6 +1,12 @@
 import styled from 'styled-components';
+import { SummaryProps } from './types';
 
-export const Container = styled.div`
+const colors = {
+  green: '#33CC95',
+  red: '#E52E4D',
+};
+
+export const Container = styled.div<SummaryProps>`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
@@ -28,7 +34,7 @@ export const Container = styled.div`
 
     &.highlight_background {
       color: #fff;
-      background: var(--green);
+      background: ${({isNegative}) => (isNegative ? colors.red : colors.green)}
     }
   }
 `;
